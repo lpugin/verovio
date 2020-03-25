@@ -54,7 +54,8 @@ downloads:
     var pdfOrientation = "portrait";
     var savedOptions = undefined;
     var customOptions = undefined;
-    var disabledOptions = ["adjustPageHeight", "breaks", "landscape", "pageHeight", "pageWidth", "mmOutput", "noFooter"];
+    var target = "";
+    var disabledOptions = ["adjustPageHeight", "breaks", "landscape", "pageHeight", "pageWidth", "mmOutput", "footer"];
 
     // reload cookies
     if ( $.cookie('zoom') ) zoom = $.cookie('zoom');
@@ -81,7 +82,7 @@ downloads:
                     breaks: "auto",
                     inputFormat: format,
                     mmOutput: "false",
-                    noFooter: "true",
+                    footer: "none",
                     pageHeight: pageHeight,
                     pageWidth: pageWidth,
                     scale: zoom
@@ -138,7 +139,17 @@ downloads:
             else {
                 $("#total_text").html(vrvToolkit.getPageCount());
                 page = 1;
+                var pageTarget = 0;
+                if (target != "") {
+                    pageTarget = vrvToolkit.getPageWithElement(target.substr(1));
+                    if (pageTarget != 0) {
+                        page = pageTarget;
+                    }
+                }
                 load_page();
+                if (pageTarget != 0) {
+                    $(target).attr("fill", "#d00").attr("stroke", "#d00");
+                }
                 $("#play-button").show();
                 $("#pdf-button").show();
                 $("#options-button").show();
@@ -417,7 +428,7 @@ downloads:
                     adjustPageHeight: false,
                     breaks: "auto",
                     mmOutput: true,
-                    noFooter: false,
+                    footer: "auto",
                     pageHeight: pdfHeight,
                     pageWidth: pdfWidth,
                     scale: 100
@@ -774,6 +785,9 @@ downloads:
         else {
             if (!file || (file.length == 0)) {
                 file = "examples/downloads/Chopin_Etude_op.10_no.9.mei";
+            }
+            else {
+                target = window.location.hash;
             }
             $("#overlay").show();
             $.ajax({
