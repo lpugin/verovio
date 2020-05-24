@@ -32,6 +32,7 @@ class Functor;
 class Hairpin;
 class Harm;
 class KeySig;
+class LabelAbbr;
 class Layer;
 class LayerElement;
 class Measure;
@@ -377,6 +378,7 @@ public:
         m_previousMeasure = NULL;
         m_freeSpace = 0;
         m_staffSize = 100;
+        m_currentLabelAbbr = NULL;
         m_doc = doc;
     }
     ArrayOfAdjustmentTuples m_overlapingSyl;
@@ -385,6 +387,7 @@ public:
     Measure *m_previousMeasure;
     int m_freeSpace;
     int m_staffSize;
+    LabelAbbr *m_currentLabelAbbr;
     Doc *m_doc;
 };
 

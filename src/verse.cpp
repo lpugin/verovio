@@ -50,6 +50,8 @@ void Verse::Reset()
     ResetLang();
     ResetNInteger();
     ResetTypography();
+    
+    m_drawingLabelAbbr = NULL;
 }
 
 void Verse::AddChild(Object *child)
@@ -126,6 +128,24 @@ int Verse::AdjustSylSpacing(FunctorParams *functorParams)
 {
     AdjustSylSpacingParams *params = dynamic_cast<AdjustSylSpacingParams *>(functorParams);
     assert(params);
+    
+    /****** find label / labelAbbr */
+    
+    // If we have a <label>, reset the previous abbreviation
+    if (this->FindDescendantByType(LABEL)) {
+        params->m_currentLabelAbbr = NULL;
+    }
+    
+    bool newLabelAbbr = false;
+    this->m_drawingLabelAbbr = NULL;
+    // Find the labelAbbr (if none previously given)
+    if (params->m_currentLabelAbbr == NULL) {
+        params->m_currentLabelAbbr = dynamic_cast<LabelAbbr *>(this->FindDescendantByType(LABELABBR));
+        // Keep indication that this is a new abbreviation and that is should not be displayed on this verse
+        newLabelAbbr = true;
+    }
+    
+    /*******/
 
     ArrayOfObjects syls;
     ClassIdComparison matchTypeSyl(SYL);
@@ -170,6 +190,12 @@ int Verse::AdjustSylSpacing(FunctorParams *functorParams)
         // No free space because we never move the first one back
         params->m_freeSpace = 0;
         params->m_previousMeasure = NULL;
+        
+        // Show abbreviation, but only if not new
+        if (!newLabelAbbr && params->m_currentLabelAbbr) {
+            this->m_drawingLabelAbbr = params->m_currentLabelAbbr;
+        }
+        
         return FUNCTOR_CONTINUE;
     }
 
@@ -226,6 +252,16 @@ int Verse::PrepareProcessingLists(FunctorParams *functorParams)
     //(*tree)[ staff->GetN() ][ layer->GetN() ][ this->GetN() ] = true;
 
     return FUNCTOR_SIBLINGS;
+}
+
+int Verse::ResetDrawing(FunctorParams *functorParams)
+{
+    // Call parent one too
+    LayerElement::ResetDrawing(functorParams);
+
+    m_drawingLabelAbbr = NULL;
+    
+    return FUNCTOR_CONTINUE;
 }
 
 } // namespace vrv

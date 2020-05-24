@@ -13,6 +13,7 @@
 
 namespace vrv {
 
+class LabelAbbr;
 class Syl;
 
 //----------------------------------------------------------------------------
@@ -65,12 +66,22 @@ public:
      * See Object::PrepareProcessingLists
      */
     virtual int PrepareProcessingLists(FunctorParams *functorParams);
+    
+    /**
+     * See Object::ResetDrawing
+     */
+    virtual int ResetDrawing(FunctorParams *functorParams);
 
 private:
     //
 public:
-    //
+    /**
+     * The abbreviation label to be drawn for this verse (if any).
+     * It is set in Object::AdjustSylSpacing.
+     */
+    LabelAbbr *m_drawingLabelAbbr;
 private:
+    //
 };
 
 } // namespace vrv
