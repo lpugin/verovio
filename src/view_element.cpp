@@ -1509,8 +1509,8 @@ void View::DrawVerse(DeviceContext *dc, LayerElement *element, Layer *layer, Sta
         labelTxt.SetPointSize(m_doc->GetDrawingLyricFont(staff->m_drawingStaffSize)->GetPointSize());
 
         TextDrawingParams params;
-        params.m_x = verse->GetDrawingX();
-        params.m_y = verse->GetDrawingY();
+        params.m_x = verse->GetDrawingX() - m_doc->GetDrawingUnit(staff->m_drawingStaffSize);
+        params.m_y = staff->GetDrawingY() + this->GetSylYRel(std::max(1, verse->GetN()), staff);
         params.m_pointSize = labelTxt.GetPointSize();
 
         dc->SetBrush(m_currentColour, AxSOLID);
