@@ -26,8 +26,8 @@ jobs:
 
       - name: Install cibuildwheel
         run: |
-          python -m pip install cibuildwheel==1.7.1
-          python -m pip install swiglpk
+          python3 -m pip install cibuildwheel==1.7.1
+          python3 -m pip install swiglpk
 
       - name: Install Visual C++ for Python 2.7
         if: runner.os == 'Windows'
@@ -37,7 +37,7 @@ jobs:
       - name: Build wheels
         run: |
           cd bindings/python
-          python -m cibuildwheel --output-dir wheelhouse
+          python3 -m cibuildwheel --output-dir wheelhouse
 
       - uses: actions/upload-artifact@v2
         with:
