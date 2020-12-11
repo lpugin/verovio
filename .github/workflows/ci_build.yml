@@ -14,7 +14,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-18.04, macos-latest]
+        os: [ubuntu-18.04, windows-latest, macos-latest]
 
     steps:
       - uses: actions/checkout@v2
@@ -27,9 +27,19 @@ jobs:
       - name: Install cibuildwheel
         run: |
           python3 -m pip install cibuildwheel==1.7.1
-          python3 -m pip install swiglpk
+
+      - name: Install Visual C++ for Python 2.7
+        if: runner.os == 'Windows'
+        run: |
+          choco install vcpython27 -f -y
 
       - name: Build wheels
+        env:
+          CIBW_SKIP: "*-win32 *-manylinux_i686 pp* cp27-* cp35-* cp39-*"
+
+          CIBW_BEFORE_BUILD_WINDOWS: nuget install intelmkl.devel.win-x64 -Version 2020.1.216 -OutputDirectory C:\\cibw
+          CIBW_BEFORE_BUILD_LINUX: yum install openblas-devel lapack-devel -y
+          CIBW_BEFORE_BUILD_MACOS: brew install openblas
         run: |
           cd bindings/python
           python3 -m cibuildwheel --output-dir wheelhouse
