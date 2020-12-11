@@ -26,7 +26,7 @@ jobs:
 
       - name: Install cibuildwheel
         run: |
-          python3 -m pip install cibuildwheel==1.7.1
+          python -m pip install cibuildwheel==1.7.1
 
       - name: Install Visual C++ for Python 2.7
         if: runner.os == 'Windows'
@@ -42,7 +42,7 @@ jobs:
           CIBW_BEFORE_BUILD_MACOS: brew install openblas
         run: |
           cd bindings/python
-          python3 -m cibuildwheel --output-dir wheelhouse
+          python -m cibuildwheel --output-dir wheelhouse
 
       - uses: actions/upload-artifact@v2
         with:
