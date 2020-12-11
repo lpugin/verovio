@@ -10,10 +10,10 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        python-version: [3.5,3.6,3.7] # this can be changed by the user
+        python-version: [3.7,3.8] # this can be changed by the user
         os: [macOS-latest, ubuntu-latest, windows-latest] # this can be changed by the user
     steps:
     - name: STEP 1. Check-Out Repo
@@ -21,17 +21,17 @@ jobs:
 
     #===============================================#
     - name: Install packages
-      if: runner.os == 'Windows'
+      if: matrix.os == 'windows-latest'
       run: |
         nuget install swigwintools -Version 4.0.0
         
     - name: Install packages
-      if: runner.os == 'macOS'
+      if: matrix.os == 'macOS-latest'
       run: |
         brew install swig
 
     - name: Install packages
-      if: runner.os == 'Linux'
+      if: matrix.os == 'ubuntu-latest'
       run: |
         sudo apt install swig
 
