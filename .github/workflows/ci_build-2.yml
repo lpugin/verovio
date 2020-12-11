@@ -1,0 +1,51 @@
+name: Python Build v2
+
+on:
+  push:
+    # Trigger the workflow on push,
+    # but only for the branches specified
+    branches:
+      # Push events on develop branch
+      - develop-wheel
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.5,3.6,3.7] # this can be changed by the user
+        os: [macOS-latest, ubuntu-latest, windows-latest] # this can be changed by the user
+    steps:
+    - name: STEP 1. Check-Out Repo
+      uses: actions/checkout@v2
+
+    #===============================================#
+    - name: Install packages
+      if: runner.os == 'Windows'
+      run: |
+        nuget install swigwintools -Version 4.0.0
+        
+    - name: Install packages
+      if: runner.os == 'macOS'
+      run: |
+        brew install swig
+
+    - name: Install packages
+      if: runner.os == 'Linux'
+      run: |
+        yum install swig
+
+    #===============================================#
+    - name: Set-Up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    #===============================================#
+    - name: STEP 3. Install dependencies
+      run: |
+        cd bindings/python
+        python setup.py bdist_wheel
+
+    - uses: actions/upload-artifact@v2
+      with:
+        path: bindings/python/dist/*.whl
