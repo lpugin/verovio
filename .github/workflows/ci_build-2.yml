@@ -40,8 +40,9 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
+
     #===============================================#
-    - name: STEP 3. Install dependencies
+    - name: STEP 3. Build Verovio
       run: |
         python -m pip install wheel
         cd bindings/python
@@ -49,4 +50,5 @@ jobs:
 
     - uses: actions/upload-artifact@v2
       with:
+        name: ${{ matrix.os }}-${{ matrix.python-version }}
         path: bindings/python/dist/*.whl
