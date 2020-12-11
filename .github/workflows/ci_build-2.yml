@@ -43,6 +43,7 @@ jobs:
     #===============================================#
     - name: STEP 3. Install dependencies
       run: |
+        python -m install wheel
         cd bindings/python
         python setup.py bdist_wheel
 
