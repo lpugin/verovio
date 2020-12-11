@@ -23,7 +23,7 @@ jobs:
     - name: Install packages
       if: matrix.os == 'windows-latest'
       run: |
-        nuget install swigwintools -Version 4.0.0
+        nuget install swigwintools -Version 4.0.0 -OutputDirectory .\bindings\python
         
     - name: Install packages
       if: matrix.os == 'macOS-latest'
