@@ -33,7 +33,7 @@ jobs:
     - name: Install packages
       if: runner.os == 'Linux'
       run: |
-        yum install swig
+        sudo apt install swig
 
     #===============================================#
     - name: Set-Up Python
