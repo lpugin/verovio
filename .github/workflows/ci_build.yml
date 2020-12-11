@@ -37,9 +37,9 @@ jobs:
         env:
           CIBW_SKIP: "*-win32 *-manylinux_i686 pp* cp27-* cp35-* cp39-*"
 
-          CIBW_BEFORE_BUILD_WINDOWS: nuget install intelmkl.devel.win-x64 -Version 2020.1.216 -OutputDirectory C:\\cibw
-          CIBW_BEFORE_BUILD_LINUX: yum install openblas-devel lapack-devel -y
-          CIBW_BEFORE_BUILD_MACOS: brew install openblas
+          CIBW_BEFORE_BUILD_WINDOWS: nuget install swigwintools -Version 4.0.0 -OutputDirectory C:\\cibw
+          CIBW_BEFORE_BUILD_LINUX: yum install swig
+          CIBW_BEFORE_BUILD_MACOS: brew install swig
         run: |
           cd bindings/python
           python -m cibuildwheel --output-dir wheelhouse
