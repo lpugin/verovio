@@ -65,4 +65,6 @@ setup(name='verovio',
       description="""A library and toolkit for engraving MEI music notation into SVG""",
       ext_modules=[verovio_module],
       py_modules=["verovio"],
+      include_package_data=True,
+      packages=['data']
       )
