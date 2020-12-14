@@ -6,7 +6,7 @@ on:
     # but only for the branches specified
     branches:
       # Push events on develop branch
-      - develop-wheel
+      - develop-wheel-no
 
 jobs:
   build:

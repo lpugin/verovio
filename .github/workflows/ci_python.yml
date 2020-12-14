@@ -6,7 +6,7 @@ on:
     # but only for the branches specified
     branches:
       # Push events on develop branch
-      - develop-wheel-2
+      - develop-wheel
 
 jobs:
   build_wheels:
@@ -41,7 +41,6 @@ jobs:
           CIBW_BEFORE_BUILD_LINUX: yum install swig
           CIBW_BEFORE_BUILD_MACOS: brew install swig
         run: |
-          cd bindings/python
           python -m cibuildwheel --output-dir wheelhouse
 
       - uses: actions/upload-artifact@v2
