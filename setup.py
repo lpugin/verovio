@@ -19,7 +19,7 @@ if platform.system() != 'Windows':
 else:
     EXTRA_COMPILE_ARGS += ['-DNO_PAE_SUPPORT']
 
-verovio_module = Extension('_verovio',
+verovio_module = Extension('verovio._verovio',
                            sources=glob('./src/*.cpp') + glob('./src/hum/*.cpp') +
                            [
                                './src/json/jsonxx.cc',
@@ -45,7 +45,7 @@ verovio_module = Extension('_verovio',
                                './libmei/atts_shared.cpp',
                                './libmei/atts_visual.cpp',
                                './bindings/python/verovio.i'],
-                           swig_opts=['-c++', '-outdir', '.'],
+                           swig_opts=['-c++', '-outdir', 'verovio'],
                            include_dirs=['/usr/local/include',
                                          './include',
                                          './include/vrv',
@@ -64,7 +64,5 @@ setup(name='verovio',
       url="www.verovio.org",
       description="""A library and toolkit for engraving MEI music notation into SVG""",
       ext_modules=[verovio_module],
-      py_modules=["verovio"],
-      include_package_data=True,
-      packages=['data']
+      packages=['verovio']
       )
