@@ -1458,7 +1458,7 @@ void View::DrawRest(DeviceContext *dc, LayerElement *element, Layer *layer, Staf
     int x = element->GetDrawingX();
     int y = element->GetDrawingY();
 
-    DrawSmuflCode(dc, x, y, drawingGlyph, staff->m_drawingStaffSize, drawingCueSize);
+    DrawSmuflCode(dc, x, y, drawingGlyph, staff->m_drawingStaffSize * 1.2, drawingCueSize);
 
     // single legder line for half and whole rests
     if ((drawingDur == DUR_1 || drawingDur == DUR_2)
