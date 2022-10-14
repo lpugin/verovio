@@ -8,7 +8,7 @@
 #ifndef __VRV_NEUME_H__
 #define __VRV_NEUME_H__
 
-#include <cassert>
+#include <assert.h>
 
 //----------------------------------------------------------------------------
 
@@ -66,40 +66,38 @@ public:
     ///@{
     Neume();
     virtual ~Neume();
-    void Reset() override;
-    Object *Clone() const override { return new Neume(*this); }
-    std::string GetClassName() const override { return "Neume"; }
+    virtual void Reset();
+    virtual Object *Clone() const { return new Neume(*this); }
+    virtual std::string GetClassName() const { return "Neume"; }
+    virtual ClassId GetClassId() const { return NEUME; }
     ///@}
 
     /**
      * Add an element (a note or a rest) to a syllable.
      * Only syl or neume will be added.
      */
-    bool IsSupportedChild(Object *object) override;
+    virtual bool IsSupportedChild(Object *object);
 
-    bool IsLastInNeume(const LayerElement *element) const;
+    virtual int GetPosition(LayerElement *element);
+    virtual int GetLigatureCount(int position);
+    virtual bool IsLastInNeume(LayerElement *element);
 
     bool GenerateChildMelodic();
 
-    NeumeGroup GetNeumeGroup() const;
+    NeumeGroup GetNeumeGroup();
 
-    std::vector<int> GetPitchDifferences() const;
+    std::vector<int> GetPitchDifferences();
 
     PitchInterface *GetHighestPitch();
     PitchInterface *GetLowestPitch();
 
 private:
-    int GetPosition(const LayerElement *element) const;
-
+    //
 public:
-    //----------------//
-    // Static members //
-    //----------------//
-
     /**
      * String keys come from the contours of neume groupings as defined in MEI4
      */
-    static const std::map<std::string, NeumeGroup> s_neumes;
+    static std::map<std::string, NeumeGroup> s_neumes;
 
     static std::string NeumeGroupToString(NeumeGroup group);
 

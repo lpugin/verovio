@@ -8,7 +8,7 @@
 #ifndef __VRV_NC_H__
 #define __VRV_NC_H__
 
-#include <cassert>
+#include <assert.h>
 
 //----------------------------------------------------------------------------
 
@@ -45,19 +45,19 @@ public:
     ///@{
     Nc();
     virtual ~Nc();
-    Object *Clone() const override { return new Nc(*this); }
-    void Reset() override;
-    std::string GetClassName() const override { return "Nc"; }
+    virtual Object *Clone() const { return new Nc(*this); }
+    virtual void Reset();
+    virtual std::string GetClassName() const { return "Nc"; }
+    virtual ClassId GetClassId() const { return NC; }
     ///@}
 
+    virtual bool IsSupportedChild(Object *object);
     /**
      * @name Getter to interfaces
      */
     ///@{
-    DurationInterface *GetDurationInterface() override { return vrv_cast<DurationInterface *>(this); }
-    const DurationInterface *GetDurationInterface() const override { return vrv_cast<const DurationInterface *>(this); }
-    PitchInterface *GetPitchInterface() override { return vrv_cast<PitchInterface *>(this); }
-    const PitchInterface *GetPitchInterface() const override { return vrv_cast<const PitchInterface *>(this); }
+    virtual DurationInterface *GetDurationInterface() { return dynamic_cast<DurationInterface *>(this); }
+    virtual PitchInterface *GetPitchInterface() { return dynamic_cast<PitchInterface *>(this); }
     ///@}
 
 private:
