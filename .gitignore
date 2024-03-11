@@ -5,7 +5,6 @@ Verovio.xcodeproj/project.xcworkspace/xcshareddata
 Verovio.xcodeproj/project.xcworkspace/xcuserdata
 Verovio.xcodeproj/xcuserdata/
 bin/
-build/
 
 # Qt Creator
 tools/CMakeLists.txt.user
@@ -41,6 +40,11 @@ bindings/python/verovio.pyc
 bindings/python/verovio.py
 bindings/python/_verovio*.so
 bindings/python/__pycache__/*
+bindings/python/CMakeCache.txt
+bindings/python/CMakeFiles/
+build
+verovio.egg-info
+/dist
 
 # java build
 bindings/java/verovio_wrap.cxx
@@ -68,7 +72,6 @@ bindings/qt/build-android
 # Output files
 output.svg
 output.mei
-index.js
 emscripten/npm-dev/node_modules
 
 # VS Code files
@@ -90,14 +93,10 @@ Release/
 *.vcxproj*
 *.sln
 
-# Fonts
-fonts/tmp/
-fonts/json/machaut.log
-fonts/json/machaut_data.ly
-fonsdfsd
+# IntelliJ files
+.idea
 
-# Vitry project stuff
-vitry/
-doc/tests/vitry_project/josquin/
-doc/tests/vitry_project/*.svg
-doc/tests/vitry_project/*.txt
+# Intermediate font files
+fonts/**/tmp
+libmei/tools/__pycache__
+doc/.venv
